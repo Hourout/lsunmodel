@@ -9,7 +9,7 @@ setup(name='lsunmodel',
       version='0.1.0',
       install_requires=[
           'loguru',
-          'kornia==0.4.1',
+          'kornia',
           'pytorch_lightning'
       ],
       description='',
