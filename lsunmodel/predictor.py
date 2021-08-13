@@ -12,15 +12,20 @@ torch.backends.cudnn.benchmark = True
 
 
 class Predictor:
-    def __init__(self, weight_path):
+    def __init__(self, weight_path, if_gpu=True):
         self.model = core.LayoutSeg.load_from_checkpoint(weight_path, backbone='resnet101')
         self.model.freeze()
-        self.model.cuda()
+        self.if_gpu = if_gpu
+        if self.if_gpu:
+            self.model.cuda()
 
     @torch.no_grad()
     def feed(self, image: torch.Tensor) -> np.ndarray:
-        _, outputs = self.model(image.unsqueeze(0).cuda())
-        return outputs.cpu()
+        if self.if_gpu:
+            _, outputs = self.model(image.unsqueeze(0).cuda())
+        else:
+            _, outputs = self.model(image.unsqueeze(0))
+        return outputs.cpu() if self.if_gpu else outputs
     
 #     def predict_video(self, path, image_size=320, device=0, output='./output/outputVideo.mp4'):
 #         stream = sequence.VideoStream(image_size, path, device)
