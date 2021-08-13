@@ -5,8 +5,8 @@ import cv2
 import numpy as np
 import torch
 
-from datasets import sequence
-from trainer import core
+from lsunmodel.datasets import sequence
+from lsunmodel.trainer import core
 
 torch.backends.cudnn.benchmark = True
 
