@@ -107,7 +107,7 @@ class Predictor:
         label = {0:'Frontal wall', 1:'Left wall', 2:'Right wall', 3:'Floor', 4:'Ceiling'}
         cnt = {label[i]:j/pred.size for i,j in Counter(pred.flatten()).items()}
         cnt = [i for i,j in cnt.items() if j>threshold_max or j<threshold_min]
-        return '面积比例合格' if len(cnt)==0 else '、'.join(cnt)+'面积比例不合格'
+        return '面积比例合格' if len(cnt)==0 else '面积比例不合格'
     
     def predict_vertical(self, line, threshold=0.06):
         pred = [i for i in line if abs(i[1]-i[3])>10*abs(i[0]-i[2]) and abs(i[0]-i[2])/abs(i[1]-i[3])>threshold]
